@@ -16,11 +16,12 @@ export const Home = () => {
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   useEffect(() => {
-    axios.get(`${url}/lists`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .get(`${url}/lists`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         setLists(res.data);
       })
@@ -33,11 +34,12 @@ export const Home = () => {
     const listId = lists[0]?.id;
     if (typeof listId !== 'undefined') {
       setSelectListId(listId);
-      axios.get(`${url}/lists/${listId}/tasks`, {
-        headers: {
-          authorization: `Bearer ${cookies.token}`
-        }
-      })
+      axios
+        .get(`${url}/lists/${listId}/tasks`, {
+          headers: {
+            authorization: `Bearer ${cookies.token}`,
+          },
+        })
         .then((res) => {
           setTasks(res.data.tasks);
         })
@@ -49,11 +51,12 @@ export const Home = () => {
 
   const handleSelectList = (id) => {
     setSelectListId(id);
-    axios.get(`${url}/lists/${id}/tasks`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .get(`${url}/lists/${id}/tasks`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         setTasks(res.data.tasks);
       })
@@ -70,8 +73,12 @@ export const Home = () => {
           <div className="list-header">
             <h2>リスト一覧</h2>
             <div className="list-menu">
-              <p><Link to="/list/new">リスト新規作成</Link></p>
-              <p><Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link></p>
+              <p>
+                <Link to="/list/new">リスト新規作成</Link>
+              </p>
+              <p>
+                <Link to={`/lists/${selectListId}/edit`}>選択中のリストを編集</Link>
+              </p>
             </div>
           </div>
           <ul className="list-tab">
@@ -115,16 +122,18 @@ const Tasks = (props) => {
   if (isDoneDisplay === 'done') {
     return (
       <ul>
-        {tasks.filter((task) => {
-          return task.done === true;
-        })
+        {tasks
+          .filter((task) => {
+            return task.done === true;
+          })
           .map((task, key) => (
-          <li key={key} className="task-item">
-            <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-              {task.title}<br />
-              {task.done ? '完了' : '未完了'}
-            </Link>
-          </li>
+            <li key={key} className="task-item">
+              <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
+                {task.title}
+                <br />
+                {task.done ? '完了' : '未完了'}
+              </Link>
+            </li>
           ))}
       </ul>
     );
@@ -132,16 +141,18 @@ const Tasks = (props) => {
 
   return (
     <ul>
-      {tasks.filter((task) => {
-        return task.done === false;
-      })
+      {tasks
+        .filter((task) => {
+          return task.done === false;
+        })
         .map((task, key) => (
-        <li key={key} className="task-item">
-          <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
-            {task.title}<br />
-            {task.done ? '完了' : '未完了'}
-          </Link>
-        </li>
+          <li key={key} className="task-item">
+            <Link to={`/lists/${selectListId}/tasks/${task.id}`} className="task-item-link">
+              {task.title}
+              <br />
+              {task.done ? '完了' : '未完了'}
+            </Link>
+          </li>
         ))}
     </ul>
   );

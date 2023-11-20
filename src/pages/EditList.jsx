@@ -15,14 +15,15 @@ export const EditList = () => {
   const handleTitleChange = (e) => setTitle(e.target.value);
   const onUpdateList = () => {
     const data = {
-      title
+      title,
     };
 
-    axios.put(`${url}/lists/${listId}`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .put(`${url}/lists/${listId}`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         history.push('/');
       })
@@ -32,11 +33,12 @@ export const EditList = () => {
   };
 
   const onDeleteList = () => {
-    axios.delete(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .delete(`${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         history.push('/');
       })
@@ -46,11 +48,12 @@ export const EditList = () => {
   };
 
   useEffect(() => {
-    axios.get(`${url}/lists/${listId}`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .get(`${url}/lists/${listId}`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         const list = res.data;
         setTitle(list.title);
@@ -67,10 +70,21 @@ export const EditList = () => {
         <h2>リスト編集</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="edit-list-form">
-          <label>タイトル</label><br />
-          <input type="text" className="edit-list-title" value={title} onChange={handleTitleChange} /><br />
-          <button type="button" className="delete-list-button" onClick={onDeleteList}>削除</button>
-          <button type="button" className="edit-list-button" onClick={onUpdateList}>更新</button>
+          <label>タイトル</label>
+          <br />
+          <input
+            type="text"
+            className="edit-list-title"
+            value={title}
+            onChange={handleTitleChange}
+          />
+          <br />
+          <button type="button" className="delete-list-button" onClick={onDeleteList}>
+            削除
+          </button>
+          <button type="button" className="edit-list-button" onClick={onUpdateList}>
+            更新
+          </button>
         </form>
       </main>
     </div>

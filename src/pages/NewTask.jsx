@@ -21,14 +21,15 @@ export const NewTask = () => {
     const data = {
       title,
       detail,
-      done: false
+      done: false,
     };
 
-    axios.post(`${url}/lists/${selectListId}/tasks`, data, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .post(`${url}/lists/${selectListId}/tasks`, data, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then(() => {
         history.push('/');
       })
@@ -38,11 +39,12 @@ export const NewTask = () => {
   };
 
   useEffect(() => {
-    axios.get(`${url}/lists`, {
-      headers: {
-        authorization: `Bearer ${cookies.token}`
-      }
-    })
+    axios
+      .get(`${url}/lists`, {
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      })
       .then((res) => {
         setLists(res.data);
         setSelectListId(res.data[0]?.id);
@@ -59,17 +61,30 @@ export const NewTask = () => {
         <h2>タスク新規作成</h2>
         <p className="error-message">{errorMessage}</p>
         <form className="new-task-form">
-          <label>リスト</label><br />
-          <select onChange={(e) => handleSelectList(e.target.value)} className="new-task-select-list">
+          <label>リスト</label>
+          <br />
+          <select
+            onChange={(e) => handleSelectList(e.target.value)}
+            className="new-task-select-list"
+          >
             {lists.map((list, key) => (
-              <option key={key} className="list-item" value={list.id}>{list.title}</option>
+              <option key={key} className="list-item" value={list.id}>
+                {list.title}
+              </option>
             ))}
-          </select><br />
-          <label>タイトル</label><br />
-          <input type="text" onChange={handleTitleChange} className="new-task-title" /><br />
-          <label>詳細</label><br />
-          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" /><br />
-          <button type="button" className="new-task-button" onClick={onCreateTask}>作成</button>
+          </select>
+          <br />
+          <label>タイトル</label>
+          <br />
+          <input type="text" onChange={handleTitleChange} className="new-task-title" />
+          <br />
+          <label>詳細</label>
+          <br />
+          <textarea type="text" onChange={handleDetailChange} className="new-task-detail" />
+          <br />
+          <button type="button" className="new-task-button" onClick={onCreateTask}>
+            作成
+          </button>
         </form>
       </main>
     </div>

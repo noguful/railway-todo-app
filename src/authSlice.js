@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 const cookie = new Cookies();
 
 const initialState = {
-  isSignIn: cookie.get('token') !== undefined
+  isSignIn: cookie.get('token') !== undefined,
 };
 
 export const authSlice = createSlice({
@@ -16,8 +16,8 @@ export const authSlice = createSlice({
     },
     signOut: (state) => {
       state.isSignIn = false;
-    }
-  }
+    },
+  },
 });
 
 export const { signIn, signOut } = authSlice.actions;

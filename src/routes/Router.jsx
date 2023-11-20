@@ -16,14 +16,14 @@ export const Router = () => {
       <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path='/' element={<PrivateRoute/>}>
+        <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
           <Route path="/task/new" element={<NewTask />} />
           <Route path="/list/new" element={<NewList />} />
           <Route path="/lists/:listId/tasks/:taskId" element={<EditTask />} />
           <Route path="/lists/:listId/edit" element={<EditList />} />
         </Route>
-        <Route element={<NotFound/> } />
+        <Route element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

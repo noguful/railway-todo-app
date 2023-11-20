@@ -20,7 +20,13 @@ export const Header = () => {
   return (
     <header className="header">
       <h1>Todoアプリ</h1>
-      {auth ? <button onClick={handleSignOut} className="sign-out-button">サインアウト</button> : <></>}
+      {auth ? (
+        <button onClick={handleSignOut} className="sign-out-button">
+          サインアウト
+        </button>
+      ) : (
+        <></>
+      )}
     </header>
   );
 };
