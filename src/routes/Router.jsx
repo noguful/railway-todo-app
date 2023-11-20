@@ -1,17 +1,16 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "../pages/Home";
-import { NotFound } from "../pages/NotFound";
-import { SignIn } from "../pages/SignIn";
-import { NewTask } from "../pages/NewTask";
-import { NewList } from "../pages/NewList";
-import { EditTask } from "../pages/EditTask";
-import { SignUp } from "../pages/SignUp";
-import { EditList } from "../pages/EditList";
-import { PrivateRoute } from "../privateRoute";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Home } from '../pages/Home';
+import { NotFound } from '../pages/NotFound';
+import { SignIn } from '../pages/SignIn';
+import { NewTask } from '../pages/NewTask';
+import { NewList } from '../pages/NewList';
+import { EditTask } from '../pages/EditTask';
+import { SignUp } from '../pages/SignUp';
+import { EditList } from '../pages/EditList';
+import { PrivateRoute } from '../privateRoute';
 
 export const Router = () => {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -27,5 +26,5 @@ export const Router = () => {
         <Route element={<NotFound/> } />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};

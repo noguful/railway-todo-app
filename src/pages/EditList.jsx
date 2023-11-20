@@ -1,35 +1,35 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { useNavigate, useParams } from "react-router-dom";
-import { Header } from "../components/Header";
-import { url } from "../const";
-import "./editList.css";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Header } from '../components/Header';
+import { url } from '../const';
+import './editList.css';
 
 export const EditList = () => {
   const history = useNavigate();
   const { listId } = useParams();
-  const [title, setTitle] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [ cookies ] = useCookies();
+  const [title, setTitle] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [cookies] = useCookies();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const onUpdateList = () => {
     const data = {
-      title: title
-    }
+      title
+    };
 
     axios.put(`${url}/lists/${listId}`, data, {
       headers: {
         authorization: `Bearer ${cookies.token}`
       }
     })
-    .then(() => {
-      history.push("/");
-    })
-    .catch((err) => {
-    setErrorMessage(`更新に失敗しました。 ${err}`);
-    })
-  }
+      .then(() => {
+        history.push('/');
+      })
+      .catch((err) => {
+        setErrorMessage(`更新に失敗しました。 ${err}`);
+      });
+  };
 
   const onDeleteList = () => {
     axios.delete(`${url}/lists/${listId}`, {
@@ -37,13 +37,13 @@ export const EditList = () => {
         authorization: `Bearer ${cookies.token}`
       }
     })
-    .then(() => {
-      history.push("/");
-    })
-    .catch((err) => {
-      setErrorMessage(`削除に失敗しました。${err}`);
-    })
-  }
+      .then(() => {
+        history.push('/');
+      })
+      .catch((err) => {
+        setErrorMessage(`削除に失敗しました。${err}`);
+      });
+  };
 
   useEffect(() => {
     axios.get(`${url}/lists/${listId}`, {
@@ -51,14 +51,14 @@ export const EditList = () => {
         authorization: `Bearer ${cookies.token}`
       }
     })
-    .then((res) => {
-      const list = res.data;
-      setTitle(list.title);
-    })
-    .catch((err) => {
-      setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
-    })
-  }, [])
+      .then((res) => {
+        const list = res.data;
+        setTitle(list.title);
+      })
+      .catch((err) => {
+        setErrorMessage(`リスト情報の取得に失敗しました。${err}`);
+      });
+  }, []);
 
   return (
     <div>
@@ -74,5 +74,5 @@ export const EditList = () => {
         </form>
       </main>
     </div>
-  )
-}
+  );
+};
