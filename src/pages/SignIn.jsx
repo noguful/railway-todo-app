@@ -25,7 +25,7 @@ export const SignIn = () => {
       .then((res) => {
         setCookie('token', res.data.token);
         dispatch(signIn());
-        history.push('/');
+        history('/');
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`);
