@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useCookies } from 'react-cookie';
 import { url } from '../const';
 import { useNavigate, useParams } from 'react-router-dom';
+import { formatInTimeZone } from 'date-fns-tz';
 import './editTask.scss';
 
 export const EditTask = () => {
@@ -12,10 +13,12 @@ export const EditTask = () => {
   const [cookies] = useCookies();
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [limit, setLimit] = useState(new Date());
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (e) => setLimit(new Date(e.target.value).toISOString());
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done');
   const onUpdateTask = () => {
     console.log(isDone);
@@ -23,6 +26,7 @@ export const EditTask = () => {
       title,
       detail,
       done: isDone,
+      limit,
     };
 
     axios
@@ -66,6 +70,7 @@ export const EditTask = () => {
         const task = res.data;
         setTitle(task.title);
         setDetail(task.detail);
+        setLimit((task.limit));
         setIsDone(task.done);
       })
       .catch((err) => {
@@ -97,6 +102,11 @@ export const EditTask = () => {
             className="edit-task-detail"
             value={detail}
           />
+          <br />
+          <label htmlFor="limit">期限日時</label>
+          <br />
+          <input id="limit" type="datetime-local" name="limit-date" value={formatInTimeZone(limit, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm")} onChange={handleLimitChange} />
+          <br />
           <br />
           <div>
             <input
