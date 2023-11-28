@@ -5,6 +5,8 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { Header } from '../components/Header';
 import { url } from '../const';
+import { format } from 'date-fns';
+import ja from 'date-fns/locale/ja';
 import './home.scss';
 
 export const Home = () => {
@@ -132,6 +134,8 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? '完了' : '未完了'}
+                <br />
+                期限：{task.limit ? format(new Date(task.limit), 'yyyy年MM月dd日 HH:mm', { locale: ja }) : 'なし'}
               </Link>
             </li>
           ))}
@@ -152,7 +156,7 @@ const Tasks = (props) => {
               <br />
               {task.done ? '完了' : '未完了'}
               <br />
-              {task.limit}
+              期限：{task.limit ? format(new Date(task.limit), 'yyyy年MM月dd日 HH:mm', { locale: ja }) : 'なし'}
             </Link>
           </li>
         ))}
