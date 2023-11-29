@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import { Header } from '../components/Header';
 import { url } from '../const';
-import { format } from 'date-fns';
+import { differenceInMinutes, format } from 'date-fns';
 import ja from 'date-fns/locale/ja';
 import './home.scss';
 
@@ -119,6 +119,26 @@ export const Home = () => {
 // 表示するタスク
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
+
+  const formatLimit = (limit) => format(new Date(limit), 'yyyy年MM月dd日 HH:mm', { locale: ja });
+
+  const differenceLimit = (limit) => differenceInMinutes(new Date(limit), new Date());
+
+  const minToDayTime = (minutes) => {
+    const minutesInADay = 60 * 24;
+    const days = Math.floor(minutes / minutesInADay);
+    const remainingMinutes = minutes % minutesInADay;
+    const hours = Math.floor(remainingMinutes / 60);
+    const finalMinutes = remainingMinutes % 60;
+
+    let result = '';
+    if (days > 0) result += `${days}日`;
+    if (hours > 0) result += `${hours}時間`;
+    if (finalMinutes > 0) result += `${finalMinutes}分`;
+
+    return result;
+  };
+
   if (tasks === null) return <></>;
 
   if (isDoneDisplay === 'done') {
@@ -135,7 +155,7 @@ const Tasks = (props) => {
                 <br />
                 {task.done ? '完了' : '未完了'}
                 <br />
-                期限：{task.limit ? format(new Date(task.limit), 'yyyy年MM月dd日 HH:mm', { locale: ja }) : 'なし'}
+                期限：{task.limit ? formatLimit(task.limit) : 'なし'}
               </Link>
             </li>
           ))}
@@ -156,7 +176,8 @@ const Tasks = (props) => {
               <br />
               {task.done ? '完了' : '未完了'}
               <br />
-              期限：{task.limit ? format(new Date(task.limit), 'yyyy年MM月dd日 HH:mm', { locale: ja }) : 'なし'}
+              期限：{task.limit ? formatLimit(task.limit) : 'なし'}
+              {task.limit ? differenceLimit(task.limit) > 0 ? `（残り${minToDayTime(differenceLimit(task.limit))}）` : '（超過！）' : ''}
             </Link>
           </li>
         ))}
