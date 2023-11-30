@@ -22,13 +22,17 @@
 
     &-item {
       flex-shrink: 0;
-      width: 100px;
-      padding: 0 25px;
+      width: 160px;
       text-overflow: normal;
       margin-right: 5px;
-      border: solid 1px #242F9B;
       justify-content: center;
       align-items: center;
+
+      button {
+        width: 100%;
+        padding: 4px 25px;
+        border: solid 1px #242F9B;
+      }
     }
   }
 }

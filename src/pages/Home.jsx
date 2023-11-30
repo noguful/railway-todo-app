@@ -83,16 +83,23 @@ export const Home = () => {
               </p>
             </div>
           </div>
-          <ul className="list-tab">
+          <ul className="list-tab" role="tablist">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
-                <li
-                  key={key}
-                  className={`list-tab-item ${isActive ? 'active' : ''}`}
-                  onClick={() => handleSelectList(list.id)}
-                >
-                  {list.title}
+                <li role='presentation' className="list-tab-item" key={key}>
+                  <button
+                    type="button"
+                    className={isActive ? 'active' : ''}
+                    onClick={() => handleSelectList(list.id)}
+                    role="tab"
+                    aria-selected={isActive ? 'true' : 'false'}
+                    aria-controls={`panel-${list.id}`}
+                    id={`tab-${list.id}`}
+                    tabIndex={isActive ? '0' : '-1'}
+                  >
+                    {list.title}
+                  </button>
                 </li>
               );
             })}
@@ -108,7 +115,21 @@ export const Home = () => {
                 <option value="done">完了</option>
               </select>
             </div>
-            <Tasks tasks={tasks} selectListId={selectListId} isDoneDisplay={isDoneDisplay} />
+            {lists.map((list, key) => {
+              const isActive = list.id === selectListId;
+              return (
+                <div
+                  key={key}
+                  id={`panel-${list.id}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${list.id}`}
+                  hidden={!isActive}
+                  tabIndex="0"
+                >
+                  <Tasks tasks={tasks} selectListId={selectListId} isDoneDisplay={isDoneDisplay} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </main>
