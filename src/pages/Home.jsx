@@ -13,6 +13,7 @@ export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo'); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
   const [selectListId, setSelectListId] = useState();
+  const [focusedTabIndex, setFocusedTabIndex] = useState();
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
@@ -66,6 +67,52 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
+
+  const tabs = document.querySelectorAll('[role="tab"]');
+
+  const tabsLength = lists.length;
+
+  const handleFocus = (e) => {
+    const currentFocusedTabIndex = e.currentTarget.getAttribute('aria-posinset');
+    setFocusedTabIndex(currentFocusedTabIndex);
+  };
+
+  const handleKeyDown = (e) => {
+    const key = e.key;
+    switch (key) {
+      case "ArrowRight":
+        focusNextTab();
+        break;
+      case "ArrowLeft":
+        focusPreviousTab();
+        break;
+    };
+  };
+
+  const tabsLastIndex = tabsLength - 1;
+
+  const focusTab = (index) => {
+    tabs[index].focus();
+  };
+
+  const focusNextTab = () => {
+    const currentIndex = Number(focusedTabIndex - 1);
+    let nextIndex = currentIndex + 1;
+    if (nextIndex > tabsLastIndex) {
+      nextIndex = 0;
+    }
+    focusTab(nextIndex);
+  };
+
+  const focusPreviousTab = () => {
+    const currentIndex = Number(focusedTabIndex - 1);
+    let nextIndex = currentIndex - 1;
+    if (nextIndex < 0) {
+      nextIndex = tabsLastIndex;
+    }
+    focusTab(nextIndex);
+  };
+
   return (
     <div>
       <Header />
@@ -92,10 +139,12 @@ export const Home = () => {
                     type="button"
                     className={isActive ? 'active' : ''}
                     onClick={() => handleSelectList(list.id)}
+                    onFocus={handleFocus}
+                    onKeyDown={handleKeyDown}
                     role="tab"
                     aria-selected={isActive ? 'true' : 'false'}
-                    aria-controls={`panel-${list.id}`}
-                    id={`tab-${list.id}`}
+                    aria-setsize={lists.length}
+                    aria-posinset={key + 1}
                     tabIndex={isActive ? '0' : '-1'}
                   >
                     {list.title}
@@ -120,11 +169,8 @@ export const Home = () => {
               return (
                 <div
                   key={key}
-                  id={`panel-${list.id}`}
                   role="tabpanel"
-                  aria-labelledby={`tab-${list.id}`}
                   hidden={!isActive}
-                  tabIndex="0"
                 >
                   <Tasks tasks={tasks} selectListId={selectListId} isDoneDisplay={isDoneDisplay} />
                 </div>
