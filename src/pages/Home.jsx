@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -13,7 +13,8 @@ export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState('todo'); // todo->未完了 done->完了
   const [lists, setLists] = useState([]);
   const [selectListId, setSelectListId] = useState();
-  const [focusedTabIndex, setFocusedTabIndex] = useState();
+  const [focusedTabIndex, setFocusedTabIndex] = useState(0);
+  const tabRefs = useRef([]);
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
@@ -68,49 +69,16 @@ export const Home = () => {
       });
   };
 
-  const tabs = document.querySelectorAll('[role="tab"]');
-
-  const tabsLength = lists.length;
-
-  const handleFocus = (e) => {
-    const currentFocusedTabIndex = e.currentTarget.getAttribute('aria-posinset');
-    setFocusedTabIndex(currentFocusedTabIndex);
-  };
-
-  const handleKeyDown = (e) => {
-    const key = e.key;
-    switch (key) {
-      case "ArrowRight":
-        focusNextTab();
-        break;
-      case "ArrowLeft":
-        focusPreviousTab();
-        break;
-    };
-  };
-
-  const tabsLastIndex = tabsLength - 1;
-
-  const focusTab = (index) => {
-    tabs[index].focus();
-  };
-
-  const focusNextTab = () => {
-    const currentIndex = Number(focusedTabIndex - 1);
-    let nextIndex = currentIndex + 1;
-    if (nextIndex > tabsLastIndex) {
-      nextIndex = 0;
+  const handleKeyDown = (e, index) => {
+    if (e.key === 'ArrowRight') {
+      const nextTab = (index + 1) % lists.length;
+      setFocusedTabIndex(nextTab);
+      tabRefs.current[nextTab].focus();
+    } else if (e.key === 'ArrowLeft') {
+      const prevTab = (index - 1 + lists.length) % lists.length;
+      setFocusedTabIndex(prevTab);
+      tabRefs.current[prevTab].focus();
     }
-    focusTab(nextIndex);
-  };
-
-  const focusPreviousTab = () => {
-    const currentIndex = Number(focusedTabIndex - 1);
-    let nextIndex = currentIndex - 1;
-    if (nextIndex < 0) {
-      nextIndex = tabsLastIndex;
-    }
-    focusTab(nextIndex);
   };
 
   return (
@@ -138,11 +106,11 @@ export const Home = () => {
                   <button
                     type="button"
                     className={isActive ? 'active' : ''}
+                    ref={(el) => (tabRefs.current[key] = el)}
+                    onKeyDown={(e) => handleKeyDown(e, key)}
                     onClick={() => handleSelectList(list.id)}
-                    onFocus={handleFocus}
-                    onKeyDown={handleKeyDown}
                     role="tab"
-                    aria-selected={isActive ? 'true' : 'false'}
+                    aria-selected={key === focusedTabIndex}
                     aria-setsize={lists.length}
                     aria-posinset={key + 1}
                     tabIndex={isActive ? '0' : '-1'}
