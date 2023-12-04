@@ -1,17 +1,21 @@
 @charset "utf-8";
 
 .new-task {
-  width: 1000px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 24px auto;
 
   &-form {
+    margin: 25px 0;
     color: #555555;
   }
 
-  &-form-select-list,
-  &-form-title,
-  &-form-detail {
-    width: 300px;
+  &-select-list,
+  &-title,
+  &-detail,
+  &-limit {
+    width: 100%;
+    font-size: large;
+    height: 30px;
     margin-bottom: 25px;
   }
 
@@ -30,4 +34,21 @@
 
 .error-message {
   color: #ff3333;
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .new-task {
+    min-width: auto;
+    padding: 0 16px;
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .new-task {
+    min-width: auto;
+    padding: 0 16px;
+    font-size: 14px;
+  }
 }

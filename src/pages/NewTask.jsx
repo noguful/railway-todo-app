@@ -87,7 +87,7 @@ export const NewTask = () => {
           <br />
           <label htmlFor="limit">期限日時</label>
           <br />
-          <input id="limit" type="datetime-local" name="limit-date" onChange={handleLimitChange} />
+          <input id="limit" type="datetime-local" name="limit-date" className="new-task-limit" onChange={handleLimitChange} />
           <br />
           <br />
           <button type="button" className="new-task-button" onClick={onCreateTask}>
