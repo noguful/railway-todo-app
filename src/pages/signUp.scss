@@ -1,8 +1,8 @@
 @charset "utf-8";
 
 .signup {
-  width: 500px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 24px auto;
 
   &-form {
     margin: 25px 0;
@@ -27,4 +27,21 @@
 
 .error-message {
   color: #ff3333;
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .signup {
+    min-width: auto;
+    padding: 0 16px;
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .signup {
+    min-width: auto;
+    padding: 0 16px;
+    font-size: 14px;
+  }
 }
