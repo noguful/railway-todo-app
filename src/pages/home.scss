@@ -1,7 +1,10 @@
 .taskList {
   margin: 50px auto;
+  padding: 0 16px;
   list-style: none;
-  width: 1000px;
+  // width: 1000px;
+  max-width: 1000px;
+  container-type: inline-size;
 }
 
 .list {
@@ -44,7 +47,7 @@
 }
 
 .tasks {
-  margin-top: 25px;
+  margin-top: 40px;
 
   &-header {
     display: flex;
@@ -55,7 +58,7 @@
 .task-item {
   list-style-type: none;
   // height: 70px;
-  width: calc(100% - 25px);
+  width: calc(100% - 50px);
   background-color: #f5f5f5;
   padding: 10px 25px;
   font-size: large;
@@ -76,9 +79,85 @@
 
 .display-select-wrapper {
   width: 100px;
-  margin: 0 0 25px auto;
+  margin: 8px 0 25px auto;
 }
 
 .display-select {
   width: 100%;
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .list {
+
+    &-tab {
+      margin-top: 16px;
+      flex-wrap: wrap;
+
+      &-item {
+        width: calc(50% - 5px);
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .list {
+
+    &-header {
+      flex-direction: column;
+    }
+
+    &-menu {
+      display: inline-flex;
+      font-size: 14px;
+      margin-top: 8px;
+
+      p:not(:first-child) {
+        margin-left: 16px;
+      }
+    }
+
+    &-tab {
+      margin-top: 16px;
+      flex-wrap: wrap;
+
+      &-item {
+        width: calc(50% - 5px);
+        margin-top: 8px;
+        
+        button {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .tasks {
+
+    &-header {
+      flex-direction: column;
+      margin: 8px 0 16px;
+    }
+
+    &-control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 14px;
+
+      .display-select-wrapper {
+        margin: 0;
+      }
+    }
+  }
+
+  .task-item {
+    width: calc(100% - 20px);
+    padding: 10px;
+    font-size: 13px;
+  }
 }
