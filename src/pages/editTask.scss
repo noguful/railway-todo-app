@@ -1,16 +1,21 @@
 @charset "utf-8";
 
 .edit-task {
-  width: 1000px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 24px auto;
 }
 
 .edit-task-form {
+  margin: 25px 0;
   color: #555555;
 }
 
-.edit-task-title, .edit-task-detail {
-  width: 300px;
+.edit-task-title,
+.edit-task-detail,
+.edit-task-limit {
+  width: 100%;
+  font-size: large;
+  height: 30px;
   margin-bottom: 25px;
 }
 
@@ -29,8 +34,30 @@
   width: 80px;
   height: 40px;
   border-radius: 5px;
+  margin-left: 8px;
+}
+
+.radio-done {
+  margin-left: 8px;
 }
 
 .error-message {
   color: #ff3333;
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .edit-task {
+    min-width: auto;
+    padding: 0 16px;
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .edit-task {
+    min-width: auto;
+    padding: 0 16px;
+    font-size: 14px;
+  }
 }

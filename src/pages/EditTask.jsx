@@ -105,7 +105,7 @@ export const EditTask = () => {
           <br />
           <label htmlFor="limit">期限日時</label>
           <br />
-          <input id="limit" type="datetime-local" name="limit-date" value={formatInTimeZone(limit, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm")} onChange={handleLimitChange} />
+          <input id="limit" type="datetime-local" name="limit-date" value={formatInTimeZone(limit, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm")} className="edit-task-limit" onChange={handleLimitChange} />
           <br />
           <br />
           <div>
@@ -121,6 +121,7 @@ export const EditTask = () => {
             <input
               type="radio"
               id="done"
+              className="radio-done"
               name="status"
               value="done"
               onChange={handleIsDoneChange}
