@@ -1,15 +1,18 @@
 @charset "utf-8";
 
 .new-list {
-  width: 1000px;
-  margin: 0 auto;
+  max-width: 500px;
+  margin: 24px auto;
 
   &-form {
+    margin-top: 24px;
     color: #555555;
   }
 
   &-title {
-    width: 300px;
+    width: 100%;
+    font-size: large;
+    height: 30px;
     margin-bottom: 25px;
   }
 
@@ -19,5 +22,22 @@
     width: 80px;
     height: 40px;
     border-radius: 5px;
+  }
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .new-list {
+    min-width: auto;
+    padding: 0 16px;
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .new-list {
+    min-width: auto;
+    padding: 0 16px;
+    font-size: 14px;
   }
 }
