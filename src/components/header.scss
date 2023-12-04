@@ -3,13 +3,29 @@
 .header {
   width: 100%;
   height: 80px;
+  padding: 0 16px;
   background-color: #242F9B;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .sign-out-button {
   color: #ffffff;
   margin: auto 25px auto auto;
+}
+
+// タブレット用スタイル
+@container layout (320px < width <= 768px) {
+  .header {
+    background-color: #000;
+  }
+}
+
+// スマホ用スタイル
+@container layout (width <= 320px) {
+  .header {
+    background-color: #f90;
+  }
 }
